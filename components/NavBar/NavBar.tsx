@@ -4,7 +4,7 @@ import AppBar from "@mui/material/AppBar";
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-
+import Button from '@mui/material/Button';
 
 interface NavBarProps {
     title: string;
@@ -30,6 +30,13 @@ const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
                 <Typography variant='h6' component='p'>
                     {title}
                 </Typography>
+
+                <Button
+                    color="inherit"
+                    sx={{ ml: 'auto', mr: 1 }}
+                >
+                    Login
+                </Button>
             </AppBar>
         </Box>
     )
