@@ -10,23 +10,29 @@ interface ItemProps {
     quantity: number;
     unit: Units;
     author: User;
-    isLast: boolean;
+    isLast?: boolean;
 }
 
-const Item: FunctionComponent = () => {
+const Item: FunctionComponent<ItemProps> = ({
+    productName,
+    quantity,
+    unit,
+    author,
+    isLast
+}) => {
     return(
-        <StyledItemBody>
+        <StyledItemBody isLast={isLast}>
             <StyledSmallContainer>
-                <UserProfile username='test' />
+                <UserProfile username={author.username} />
             </StyledSmallContainer>
 
             <StyledItemDataContainer>
                 <Typography component='p' variant='h6'>
-                    Product name
+                    {productName}
                 </Typography>
 
                 <Typography component='p' variant='body1'>
-                    500 ml
+                    {`${quantity} ${unit}`}
                 </Typography>
             </StyledItemDataContainer>
 

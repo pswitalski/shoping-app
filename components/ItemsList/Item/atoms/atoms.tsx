@@ -1,8 +1,11 @@
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 
-export const StyledItemBody =  styled(Box)`
-    /* background-color: red; */
+interface StyledItemBodyProps {
+    isLast?: boolean;
+}
+
+export const StyledItemBody =  styled(Box)<StyledItemBodyProps>`
     display: grid;
     grid-template-columns: 60px 1fr 60px;
     grid-template-rows: 70px;
