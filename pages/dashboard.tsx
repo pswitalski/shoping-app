@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import ItemsList from '../components/ItemsList/ItemsList';
 import AddNewItemButton from '../components/AddNewItemButton/AddNewItemButton';
 import RemoveItemsButton from '../components/RemoveItemsButton/RemoveItemsButton';
+import NewItemsModal from '../components/NewItemModal/NewItemsModals';
 
 const Dashboard: NextPage = () => {
     return(
@@ -10,6 +11,7 @@ const Dashboard: NextPage = () => {
             <ItemsList />
             <AddNewItemButton />
             <RemoveItemsButton />
+            <NewItemsModal />
         </Box>
     )
 }
