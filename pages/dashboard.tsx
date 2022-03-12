@@ -5,6 +5,7 @@ import AddNewItemButton from '../components/AddNewItemButton/AddNewItemButton';
 import RemoveItemsButton from '../components/RemoveItemsButton/RemoveItemsButton';
 import NewItemsModal from '../components/NewItemModal/NewItemsModals';
 import CategoryDrawer from '../components/CategoryDrawer/CategoryDrawer';
+import Deletedialog from '../components/DeleteDialog/DeleteDialog';
 
 const Dashboard: NextPage = () => {
     return(
@@ -14,6 +15,7 @@ const Dashboard: NextPage = () => {
             <RemoveItemsButton />
             {/* <NewItemsModal /> */}
             {/* <CategoryDrawer /> */}
+            <Deletedialog />
         </Box>
     )
 }
