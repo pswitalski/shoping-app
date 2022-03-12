@@ -1,7 +1,9 @@
 import { FunctionComponent } from 'react';
 import { Typography, Box, Paper } from "@mui/material";
 import styled from "@emotion/styled";
-import LoginForm from '../LoginForm/LoginForm';
+import LoginForm from './LoginForm/LoginForm';
+import RegisterForm from './RegisterForm/RegisterForm';
+import LetsStartInfo from './LetsStartInfo/LetsStartInfo';
 
 interface StartingContainerProps {
     children: string;
@@ -29,7 +31,9 @@ const StartingContainer: FunctionComponent<StartingContainerProps> = ({children}
                 {children}
             </Typography>
 
-            <LoginForm />
+            {/* <LoginForm /> */}
+            <RegisterForm />
+            {/* <LetsStartInfo /> */}
         </StyledPaper>
     )
 }
