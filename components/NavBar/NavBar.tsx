@@ -35,7 +35,7 @@ const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
                     color="inherit"
                     sx={{ ml: 'auto', mr: 1 }}
                 >
-                    Login
+                    Logout
                 </Button>
             </AppBar>
         </Box>
