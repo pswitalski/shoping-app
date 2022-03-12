@@ -1,9 +1,13 @@
-import type { NextPage } from 'next'
+import type { NextPage } from 'next';
+import AddNewItemButton from '../components/AddNewItemButton/AddNewItemButton';
 
 const Dashboard: NextPage = () => {
     return(
-        <div>dashboard</div>
+        <div>
+            dashboard
+            <AddNewItemButton />
+        </div>
     )
 }
 
-export default Dashboard
+export default Dashboard;
