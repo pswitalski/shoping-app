@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
+import UserProfile from '../UserProfile/UserProfile';
 
 interface NavBarProps {
     title: string;
@@ -12,7 +13,7 @@ interface NavBarProps {
 
 const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
     return(
-        <Box sx={{ flexGrow: 1 }} >
+        <Box sx={{ flexGrow: 1, mb: 1 }} >
             <AppBar
                 position="static"
                 color="primary"
@@ -31,12 +32,23 @@ const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
                     {title}
                 </Typography>
 
-                <Button
-                    color="inherit"
-                    sx={{ ml: 'auto', mr: 1 }}
+                <Box
+                    sx={{
+                        ml: 'auto',
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
                 >
-                    Login
-                </Button>
+                    <UserProfile username='test' showIcon small/>
+
+                    <Button
+                        color="inherit"
+                        sx={{ mx: 1 }}
+                    >
+                        Logout
+                    </Button>
+                </Box>
+
             </AppBar>
         </Box>
     )
