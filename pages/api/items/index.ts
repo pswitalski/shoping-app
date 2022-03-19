@@ -18,13 +18,11 @@ export default async function handler(
 
     switch(req.method) {
         case 'POST':
-          // console.log(req.body)
-
           saveNewItemToDatabase(dbUserName, dbPassword, dbName, itemsCollectionName, req.body)
-
+          res.status(200).json(req.body)
 
         default:
-        const items = await getDataFromDatabaseCollection(dbUserName, dbPassword, dbName, itemsCollectionName)
-        res.status(200).json({ items  })
+          const items = await getDataFromDatabaseCollection(dbUserName, dbPassword, dbName, itemsCollectionName)
+          res.status(200).json({ items  })
     }
 }
