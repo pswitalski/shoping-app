@@ -20,7 +20,7 @@ const Dashboard: NextPage = () => {
             <ItemsList />
             <AddNewItemButton onClick={openNewItemModalHandler} />
             <RemoveItemsButton />
-            {isNewItemModalOpen && <NewItemsModal closeHandler={() => setIsNewItemModalOpen(false)} />}
+            {isNewItemModalOpen && <NewItemsModal closeHandler={setIsNewItemModalOpen} />}
             {/* <CategoryDrawer /> */}
             {/* <Deletedialog /> */}
         </Box>
