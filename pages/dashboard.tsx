@@ -7,6 +7,7 @@ import RemoveItemsButton from '../components/RemoveItemsButton/RemoveItemsButton
 import NewItemsModal from '../components/NewItemModal/NewItemsModals';
 import CategoryDrawer from '../components/CategoryDrawer/CategoryDrawer';
 import DeleteDialog from '../components/DeleteDialog/DeleteDialog';
+import { sendDeleteAllRequestToApi } from '../utils/sendDeleteAllRequestToApi';
 
 const Dashboard: NextPage = () => {
     const [isNewItemModalOpen, setIsNewItemModalOpen] = useState(false);
@@ -24,6 +25,11 @@ const Dashboard: NextPage = () => {
         setIsDeleteModalOpen(false);
     }
 
+    const deleteAllHandler = async () => {
+        await sendDeleteAllRequestToApi();
+        setIsDeleteModalOpen(false);
+    }
+
 
     return(
         <Box>
@@ -32,7 +38,12 @@ const Dashboard: NextPage = () => {
             <RemoveItemsButton onClick={openDeleteModalHandler} />
             {isNewItemModalOpen && <NewItemsModal closeHandler={setIsNewItemModalOpen} />}
             {/* <CategoryDrawer /> */}
-            {isDeleteModalOpen && <DeleteDialog closeDialogHandler={closeDeleteModalHandler} />}
+            {isDeleteModalOpen
+                &&
+            <DeleteDialog
+                closeDialogHandler={closeDeleteModalHandler}
+                deleteAllHandler={deleteAllHandler}
+            />}
         </Box>
     )
 }

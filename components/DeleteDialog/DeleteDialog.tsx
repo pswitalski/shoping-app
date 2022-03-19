@@ -13,9 +13,10 @@ const buttonStyle = {
 
 interface DeleteDialogProps {
     closeDialogHandler: () => void;
+    deleteAllHandler: () => Promise<void>;
 }
 
-const DeleteDialog: FunctionComponent<DeleteDialogProps> = ({closeDialogHandler}) => {
+const DeleteDialog: FunctionComponent<DeleteDialogProps> = ({closeDialogHandler, deleteAllHandler}) => {
    return(
     <Dialog open>
         <DialogTitle id="alert-dialog-title">
@@ -43,7 +44,7 @@ const DeleteDialog: FunctionComponent<DeleteDialogProps> = ({closeDialogHandler}
             <Button sx={buttonStyle} variant='contained' color="primary">
                 Delete selected items
             </Button>
-            <Button sx={buttonStyle} variant='contained' color="error">
+            <Button sx={buttonStyle} variant='contained' color="error" onClick={deleteAllHandler}>
                 Delete all items
             </Button>
         </DialogActions>
