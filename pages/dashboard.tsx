@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { NextPage } from 'next';
 import { Box } from '@mui/material';
 import ItemsList from '../components/ItemsList/ItemsList';
@@ -8,12 +9,18 @@ import CategoryDrawer from '../components/CategoryDrawer/CategoryDrawer';
 import Deletedialog from '../components/DeleteDialog/DeleteDialog';
 
 const Dashboard: NextPage = () => {
+    const [isNewItemModalOpen, setIsNewItemModalOpen] = useState(false);
+
+    const openNewItemModalHandler = () => {
+        setIsNewItemModalOpen(true)
+    }
+
     return(
         <Box>
             <ItemsList />
-            <AddNewItemButton />
+            <AddNewItemButton onClick={openNewItemModalHandler} />
             <RemoveItemsButton />
-            {/* <NewItemsModal /> */}
+            {isNewItemModalOpen && <NewItemsModal closeHandler={() => setIsNewItemModalOpen(false)} />}
             {/* <CategoryDrawer /> */}
             {/* <Deletedialog /> */}
         </Box>

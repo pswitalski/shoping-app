@@ -1,10 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getDataFromDatabaseCollection } from '../../utils/getDataFromDatabaseCollection';
+import { getDataFromDatabaseCollection } from '../../../utils/getDataFromDatabaseCollection';
 
-const dbUserName = process.env.DATABASE_USERNAME;
-const dbPassword = process.env.DATABASE_PASSWORD;
-const dbName = process.env.DATABASE_NAME;
+const dbUserName = process.env.DATABASE_USERNAME!;
+const dbPassword = process.env.DATABASE_PASSWORD!;
+const dbName = process.env.DATABASE_NAME!;
 const itemsCollectionName = 'items';
 
 

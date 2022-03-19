@@ -31,7 +31,11 @@ const paperStyle = {
       </MenuItem>
   ))
 
-const NewItemsModal: FunctionComponent = () => {
+interface NewItemsModalProps {
+    closeHandler: () => void;
+}
+
+const NewItemsModal: FunctionComponent<NewItemsModalProps> = ({closeHandler}) => {
     return(
         <Modal
             open
@@ -79,7 +83,7 @@ const NewItemsModal: FunctionComponent = () => {
                             Add
                         </Button>
 
-                        <Button variant="contained" color='error' sx=   {{mx:1}}>
+                        <Button variant="contained" color='error' sx=   {{mx:1}} onClick={closeHandler}>
                             Cancel
                        </Button>
                  </Stack>
