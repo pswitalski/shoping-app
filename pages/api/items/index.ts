@@ -24,9 +24,21 @@ export default async function handler(
           break;
 
         case 'DELETE':
-          console.log('DELETE');
-          await removeItemsFromDatabase(dbUserName, dbPassword, dbName, itemsCollectionName);
-          res.status(200).json({ message: 'All items removed'} );
+          console.log(req.body);
+
+          if (!!req.body.deleteAll) {
+            await removeItemsFromDatabase(dbUserName, dbPassword, dbName, itemsCollectionName);
+            res.status(200).json({ message: 'All items removed'} );
+          } else {
+            const targets = req.body.deleteTargetIds;
+            await removeItemsFromDatabase(dbUserName, dbPassword, dbName, itemsCollectionName, targets);
+
+            res.status(200).json({
+              message: 'Selected items removed',
+              items: targets,
+            } );
+          }
+
           break;
 
         default:

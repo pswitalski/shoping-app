@@ -1,10 +1,11 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 
 export async function removeItemsFromDatabase(
     username: string,
     password: string,
     databaseName: string,
     collectionName: string,
+    targets?: string[],
 ) {
     if (!username || !password || !databaseName || !collectionName) return;
 
@@ -14,7 +15,17 @@ export async function removeItemsFromDatabase(
         const db = client.db(databaseName);
         const itemsCollection = db.collection(collectionName);
 
-        itemsCollection.deleteMany({})
+        if (targets) {
+            if (targets.length === 1) {
+                const targetId = new ObjectId(`${targets[0]}`);
+                itemsCollection.deleteOne({"_id": targetId})
+            } else {
+                const ids = targets.map(target => (new ObjectId(`${target}`)));
+                itemsCollection.deleteMany({"_id": {$in: ids}})
+            }
+        } else {
+            itemsCollection.deleteMany({})
+        }
 
     } catch(err) {
         console.error((err as Error).message)

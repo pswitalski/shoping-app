@@ -7,6 +7,7 @@ export async function sendDeleteAllRequestToApi() {
         headers:{
             'Content-Type': 'application/json'
         },
+        body: JSON.stringify({ deleteAll: true })
     })
 
     return response;
