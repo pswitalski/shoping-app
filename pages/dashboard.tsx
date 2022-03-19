@@ -6,23 +6,33 @@ import AddNewItemButton from '../components/AddNewItemButton/AddNewItemButton';
 import RemoveItemsButton from '../components/RemoveItemsButton/RemoveItemsButton';
 import NewItemsModal from '../components/NewItemModal/NewItemsModals';
 import CategoryDrawer from '../components/CategoryDrawer/CategoryDrawer';
-import Deletedialog from '../components/DeleteDialog/DeleteDialog';
+import DeleteDialog from '../components/DeleteDialog/DeleteDialog';
 
 const Dashboard: NextPage = () => {
     const [isNewItemModalOpen, setIsNewItemModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const openNewItemModalHandler = () => {
         setIsNewItemModalOpen(true)
     }
 
+    const openDeleteModalHandler = () => {
+        setIsDeleteModalOpen(true);
+    }
+
+    const closeDeleteModalHandler = () => {
+        setIsDeleteModalOpen(false);
+    }
+
+
     return(
         <Box>
             <ItemsList />
             <AddNewItemButton onClick={openNewItemModalHandler} />
-            <RemoveItemsButton />
+            <RemoveItemsButton onClick={openDeleteModalHandler} />
             {isNewItemModalOpen && <NewItemsModal closeHandler={setIsNewItemModalOpen} />}
             {/* <CategoryDrawer /> */}
-            {/* <Deletedialog /> */}
+            {isDeleteModalOpen && <DeleteDialog closeDialogHandler={closeDeleteModalHandler} />}
         </Box>
     )
 }

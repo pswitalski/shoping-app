@@ -11,7 +11,11 @@ const buttonStyle = {
     width: '100%'
 }
 
-const DeleteDialog: FunctionComponent = () => {
+interface DeleteDialogProps {
+    closeDialogHandler: () => void;
+}
+
+const DeleteDialog: FunctionComponent<DeleteDialogProps> = ({closeDialogHandler}) => {
    return(
     <Dialog open>
         <DialogTitle id="alert-dialog-title">
@@ -33,7 +37,7 @@ const DeleteDialog: FunctionComponent = () => {
                 gridGap: 8
             }}
         >
-            <Button sx={buttonStyle} variant='contained' color="success">
+            <Button sx={buttonStyle} variant='contained' color="success" onClick={closeDialogHandler}>
                 Cancel
             </Button>
             <Button sx={buttonStyle} variant='contained' color="primary">
