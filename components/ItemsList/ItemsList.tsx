@@ -1,30 +1,44 @@
-import { FunctionComponent } from 'react';
-import { Box } from '@mui/material';
+import { FunctionComponent, useState, useEffect } from 'react';
+import { Box, CircularProgress } from '@mui/material';
 import Item from "./Item/Item";
 import { Units } from '../../types/units';
+import { Item as ItemType } from '../../types/item';
+
+const url = 'http://localhost:3000/api/items';
 
 const ItemsList: FunctionComponent = () => {
+
+    const [items, setItems] = useState([]);
+
+    useEffect( () => {
+        const fetchItems = async (url: string) => {
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log(data)
+            setItems(data.items);
+        }
+
+        fetchItems(url);
+    }, [])
+
+    const generateItems = () => (
+        (items as ItemType[]).map((item, index) => (
+            <Item
+                key={item.name}
+                productName={item.name}
+                quantity={item.quantity}
+                unit={item.unit as Units}
+                isLast={index === items.length-1}
+                author={item.author}
+            />
+        ))
+    )
+
     return(
         <Box>
-            <Item
-                productName='item 1'
-                quantity={1}
-                unit={Units.kilograms}
-                author={{username: 'test'}}
-            />
-            <Item
-                productName='item 2'
-                quantity={1}
-                unit={Units.kilograms}
-                author={{username: 'test'}}
-            />
-            <Item
-                productName='item 3'
-                quantity={1}
-                unit={Units.kilograms}
-                author={{username: 'test'}}
-                isLast
-            />
+            {items.length === 0 && <CircularProgress sx={{mx: 'auto', display: 'block'}} />}
+            {generateItems()}
+
         </Box>
     )
 }

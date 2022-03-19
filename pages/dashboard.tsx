@@ -15,7 +15,7 @@ const Dashboard: NextPage = () => {
             <RemoveItemsButton />
             {/* <NewItemsModal /> */}
             {/* <CategoryDrawer /> */}
-            <Deletedialog />
+            {/* <Deletedialog /> */}
         </Box>
     )
 }
