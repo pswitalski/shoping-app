@@ -39,7 +39,7 @@ const paperStyle = {
   ))
 
 interface NewItemsModalProps {
-    closeHandler: Dispatch<SetStateAction<boolean>>;
+    closeHandler: () => void;
 }
 
 const validationSchema = yup.object({
@@ -148,7 +148,7 @@ const NewItemsModal: FunctionComponent<NewItemsModalProps> = ({closeHandler}) =>
                             Add
                         </Button>
 
-                        <Button variant="contained" color='error' sx=   {{mx:1}} onClick={() => closeHandler(false)}>
+                        <Button variant="contained" color='error' sx=   {{mx:1}} onClick={closeHandler}>
                             Cancel
                        </Button>
                  </Stack>

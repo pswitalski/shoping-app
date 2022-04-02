@@ -14,16 +14,19 @@ import { useDispatch, connect } from 'react-redux';
 
 interface DashboardProps {
     isDeleteModalOpen: boolean;
+    isNewItemModalOpen: boolean;
 }
 
-const Dashboard: NextPage<DashboardProps> = ({ isDeleteModalOpen }) => {
+const Dashboard: NextPage<DashboardProps> = ({ isDeleteModalOpen, isNewItemModalOpen }) => {
     const session = useSession();
     const dispatch = useDispatch();
 
-    const [isNewItemModalOpen, setIsNewItemModalOpen] = useState(false);
-
     const openNewItemModalHandler = () => {
-        setIsNewItemModalOpen(true)
+        dispatch({ type: 'modals/openAddItem' });
+    }
+
+    const closeNewItemModalHandler = () => {
+        dispatch({ type: 'modals/closeAddItem' });
     }
 
     const openDeleteModalHandler = () => {
@@ -50,7 +53,7 @@ const Dashboard: NextPage<DashboardProps> = ({ isDeleteModalOpen }) => {
             <ItemsList />
             <AddNewItemButton onClick={openNewItemModalHandler} />
             <RemoveItemsButton onClick={openDeleteModalHandler} />
-            {isNewItemModalOpen && <NewItemsModal closeHandler={setIsNewItemModalOpen} />}
+            {isNewItemModalOpen && <NewItemsModal closeHandler={closeNewItemModalHandler} />}
             {/* <CategoryDrawer /> */}
             {isDeleteModalOpen
                 &&
@@ -72,7 +75,8 @@ interface stateToPropsType {
 
 function mapStateToProps(state: stateToPropsType) {
     return {
-        isDeleteModalOpen: state.modals.delete
+        isDeleteModalOpen: state.modals.delete,
+        isNewItemModalOpen: state.modals.add,
     }
 }
 

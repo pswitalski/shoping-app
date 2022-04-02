@@ -12,7 +12,9 @@ export const modalsSlice = createSlice({
         openAddItem(state) {
             state.add = true;
         },
-        closeAddItem(state) {},
+        closeAddItem(state) {
+            state.add = false;
+        },
         openRemoveItem(state) {
             state.delete = true;
         },
