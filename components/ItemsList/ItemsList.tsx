@@ -1,34 +1,43 @@
-import { FunctionComponent, useState, useEffect } from 'react';
+import { FunctionComponent, useState, useEffect, Dispatch } from 'react';
+import { connect } from 'react-redux';
 import { Box, CircularProgress } from '@mui/material';
 import Item from "./Item/Item";
 import { Units } from '../../types/units';
 import { Item as ItemType } from '../../types/item';
+import { AppDispatch } from '../../stores/store';
 
 const url = 'http://localhost:3000/api/items';
 
-const ItemsList: FunctionComponent = () => {
+interface ItemsListProps {
+    dispatch: AppDispatch;
+    items: {
+        itemsList: ItemType[]
+    }
+}
 
-    const [items, setItems] = useState([]);
-
+const ItemsList: FunctionComponent<ItemsListProps> = ({items, dispatch}) => {
     useEffect( () => {
         const fetchItems = async (url: string) => {
             const response = await fetch(url);
             const data = await response.json();
             console.log(data)
-            setItems(data.items);
+            dispatch({
+                type: 'items/addItems',
+                payload: data.items
+            })
         }
 
         fetchItems(url);
     }, [])
 
     const generateItems = () => (
-        (items as ItemType[]).map((item, index) => (
+        (items.itemsList as ItemType[]).map((item, index) => (
             <Item
                 key={item.name}
                 productName={item.name}
                 quantity={item.quantity}
                 unit={item.unit as Units}
-                isLast={index === items.length-1}
+                isLast={index === items.itemsList.length-1}
                 author={item.author}
             />
         ))
@@ -36,11 +45,15 @@ const ItemsList: FunctionComponent = () => {
 
     return(
         <Box>
-            {items.length === 0 && <CircularProgress sx={{mx: 'auto', display: 'block'}} />}
+            {items.itemsList.length === 0 && <CircularProgress sx={{mx: 'auto', display: 'block'}} />}
             {generateItems()}
 
         </Box>
     )
 }
 
-export default ItemsList;
+function mapStateToProps(state: ItemsListProps) {
+    return { items: state.items }
+}
+
+export default connect(mapStateToProps)(ItemsList);
