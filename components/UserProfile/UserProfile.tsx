@@ -10,6 +10,8 @@ interface UserProfileProps {
 }
 
 const UserProfile: FunctionComponent<UserProfileProps> = ({username, src, showIcon, small}) => {
+    const name = username || 'user';
+
     return(
             <Avatar
                 alt={username}
@@ -19,7 +21,7 @@ const UserProfile: FunctionComponent<UserProfileProps> = ({username, src, showIc
                     width: small ? 20 : 50,
                 }}
             >
-                {!showIcon && username[0].toUpperCase()}
+                {!showIcon && name[0].toUpperCase()}
                 {showIcon && <AccountCircleIcon />}
             </Avatar>
     )

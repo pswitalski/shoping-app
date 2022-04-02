@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { Units } from '../../types/units';
 import { Item } from '../../types/item';
+import { User } from '../../types/user';
 import { sendNewItemToApi } from '../../utils/sendNewItemToApi';
 import { useSession } from "next-auth/react"
 
@@ -66,7 +67,7 @@ const NewItemsModal: FunctionComponent<NewItemsModalProps> = ({closeHandler}) =>
             const itemValues = {
                 ...values,
                 quantity: parseInt(values.quantity),
-                author: session.data?.user,
+                author: session.data?.user as User,
             };
             console.log(itemValues)
 
