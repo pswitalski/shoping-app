@@ -4,16 +4,18 @@ import styled from "@emotion/styled";
 import LoginForm from './LoginForm/LoginForm';
 import RegisterForm from './RegisterForm/RegisterForm';
 import LetsStartInfo from './LetsStartInfo/LetsStartInfo';
+import ProviderForm from './ProviderForm/ProviderForm';
+import { useSession } from "next-auth/react"
+
 
 interface StartingContainerProps {
     children: string;
 }
 
 const StyledPaper = styled(Paper)`
-    padding: 10px;
+    padding: 10px 10px 30px;
     width: 350px;
     margin: auto;
-    height: 80vh;
     max-height: 500px;
     background-color: whitesmoke;
     display: flex;
@@ -22,6 +24,10 @@ const StyledPaper = styled(Paper)`
 `
 
 const StartingContainer: FunctionComponent<StartingContainerProps> = ({children}) => {
+
+    const sessionData = useSession()
+    console.log('sessionData: ', sessionData)
+
     return(
         <StyledPaper elevation={8}>
             <Typography
@@ -31,8 +37,9 @@ const StartingContainer: FunctionComponent<StartingContainerProps> = ({children}
                 {children}
             </Typography>
 
+            <ProviderForm />
             {/* <LoginForm /> */}
-            <RegisterForm />
+            {/* <RegisterForm /> */}
             {/* <LetsStartInfo /> */}
         </StyledPaper>
     )

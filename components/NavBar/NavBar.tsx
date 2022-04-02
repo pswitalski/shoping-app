@@ -1,4 +1,5 @@
 import { FunctionComponent } from 'react';
+import { signOut, useSession } from "next-auth/react"
 import Box from '@mui/material/Box';
 import AppBar from "@mui/material/AppBar";
 import Typography from '@mui/material/Typography';
@@ -12,6 +13,13 @@ interface NavBarProps {
 }
 
 const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
+    const { status, data } = useSession();
+
+    const isLogOutButtonVisible = status === 'authenticated';
+
+    console.log(status)
+    console.log(data)
+
     return(
         <Box sx={{ flexGrow: 1, mb: 1 }} >
             <AppBar
@@ -39,14 +47,24 @@ const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
                         alignItems: 'center',
                     }}
                 >
-                    <UserProfile username='test' showIcon small/>
+                    {isLogOutButtonVisible &&
+                    <UserProfile
+                        username={data?.user?.name || 'user'}
+                        src={data?.user?.image || undefined}
+                        showIcon
+                        small
+                        />
+                    }
 
+                    {isLogOutButtonVisible &&
                     <Button
                         color="inherit"
                         sx={{ mx: 1 }}
+                        onClick={() => signOut()}
                     >
                         Logout
                     </Button>
+                    }
                 </Box>
 
             </AppBar>
