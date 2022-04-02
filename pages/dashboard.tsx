@@ -10,9 +10,12 @@ import NewItemsModal from '../components/NewItemModal/NewItemsModals';
 import CategoryDrawer from '../components/CategoryDrawer/CategoryDrawer';
 import DeleteDialog from '../components/DeleteDialog/DeleteDialog';
 import { sendDeleteAllRequestToApi } from '../utils/sendDeleteAllRequestToApi';
+import { useDispatch } from 'react-redux';
 
-const Dashboard: NextPage = () => {
+const Dashboard: NextPage = (props) => {
+    console.log('dashboard props: ', props)
     const session = useSession();
+    const dispatch = useDispatch();
 
     const [isNewItemModalOpen, setIsNewItemModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -30,7 +33,7 @@ const Dashboard: NextPage = () => {
     }
 
     const deleteAllHandler = async () => {
-        await sendDeleteAllRequestToApi();
+        dispatch({ type: 'items/clearAll' })
         setIsDeleteModalOpen(false);
     }
 
