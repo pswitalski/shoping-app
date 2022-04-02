@@ -7,7 +7,7 @@ export const itemsSlice = createSlice({
     initialState: initialItems,
     reducers: {
         clearAll(state) {
-            state = initialItems;
+            state.itemsList = [];
         },
         addItems(state, action) {
             state.itemsList = action.payload
