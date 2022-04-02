@@ -22,6 +22,7 @@ export async function saveNewItemToDatabase(
             name: item.name,
             quantity: item.quantity,
             unit: item.unit,
+            author: item.author,
         }
 
         itemsCollection.insertOne({...newItem})
