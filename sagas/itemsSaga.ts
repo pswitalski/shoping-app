@@ -16,6 +16,7 @@ function* addSingleItem(action: { payload: Item; type: string; }) {
    console.log(action)
   try {
      yield call(() => sendNewItemToApi(action.payload));
+     yield put({type: 'modals/closeAddItem'});
   } catch (e: any) {
      yield put({type: "USER_FETCH_FAILED", message: e.message});
   }

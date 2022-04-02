@@ -10,31 +10,36 @@ import NewItemsModal from '../components/NewItemModal/NewItemsModals';
 import CategoryDrawer from '../components/CategoryDrawer/CategoryDrawer';
 import DeleteDialog from '../components/DeleteDialog/DeleteDialog';
 import { sendDeleteAllRequestToApi } from '../utils/sendDeleteAllRequestToApi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 
-const Dashboard: NextPage = (props) => {
-    console.log('dashboard props: ', props)
+interface DashboardProps {
+    isDeleteModalOpen: boolean;
+    isNewItemModalOpen: boolean;
+}
+
+const Dashboard: NextPage<DashboardProps> = ({ isDeleteModalOpen, isNewItemModalOpen }) => {
     const session = useSession();
     const dispatch = useDispatch();
 
-    const [isNewItemModalOpen, setIsNewItemModalOpen] = useState(false);
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
     const openNewItemModalHandler = () => {
-        setIsNewItemModalOpen(true)
+        dispatch({ type: 'modals/openAddItem' });
+    }
+
+    const closeNewItemModalHandler = () => {
+        dispatch({ type: 'modals/closeAddItem' });
     }
 
     const openDeleteModalHandler = () => {
-        setIsDeleteModalOpen(true);
+        dispatch({ type: 'modals/openRemoveItem' });
     }
 
     const closeDeleteModalHandler = () => {
-        setIsDeleteModalOpen(false);
+        dispatch({ type:  'modals/closeRemoveItem'});
     }
 
     const deleteAllHandler = async () => {
-        dispatch({ type: 'items/clearAll' })
-        setIsDeleteModalOpen(false);
+        dispatch({ type: 'items/clearAll' });
+        dispatch({ type:  'modals/closeRemoveItem'});
     }
 
     useEffect(() => {
@@ -48,7 +53,7 @@ const Dashboard: NextPage = (props) => {
             <ItemsList />
             <AddNewItemButton onClick={openNewItemModalHandler} />
             <RemoveItemsButton onClick={openDeleteModalHandler} />
-            {isNewItemModalOpen && <NewItemsModal closeHandler={setIsNewItemModalOpen} />}
+            {isNewItemModalOpen && <NewItemsModal closeHandler={closeNewItemModalHandler} />}
             {/* <CategoryDrawer /> */}
             {isDeleteModalOpen
                 &&
@@ -60,4 +65,19 @@ const Dashboard: NextPage = (props) => {
     )
 }
 
-export default Dashboard;
+interface stateToPropsType {
+    modals: {
+        delete: boolean;
+        add: boolean;
+    }
+}
+
+
+function mapStateToProps(state: stateToPropsType) {
+    return {
+        isDeleteModalOpen: state.modals.delete,
+        isNewItemModalOpen: state.modals.add,
+    }
+}
+
+export default connect(mapStateToProps)(Dashboard);
