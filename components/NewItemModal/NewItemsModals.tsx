@@ -1,4 +1,6 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, Dispatch, SetStateAction } from 'react';
+import { Formik, Field, Form, useFormik } from 'formik';
+import * as yup from 'yup';
 import {
     Paper,
     Modal,
@@ -13,6 +15,8 @@ import {
     FormControl,
 } from '@mui/material';
 import { Units } from '../../types/units';
+import { Item } from '../../types/item';
+import { sendNewItemToApi } from '../../utils/sendNewItemToApi';
 
 const paperStyle = {
     position: 'absolute' as 'absolute',
@@ -31,13 +35,54 @@ const paperStyle = {
       </MenuItem>
   ))
 
-const NewItemsModal: FunctionComponent = () => {
+interface NewItemsModalProps {
+    closeHandler: Dispatch<SetStateAction<boolean>>;
+}
+
+const validationSchema = yup.object({
+    name: yup
+      .string()
+      .required('Item name is required'),
+    unit: yup
+      .string()
+      .required('Unit is required'),
+    quantity: yup
+        .string()
+        .required('Quantity is required'),
+  });
+
+const NewItemsModal: FunctionComponent<NewItemsModalProps> = ({closeHandler}) => {
+
+    const formik = useFormik({
+        initialValues: {
+          name: '',
+          quantity: '',
+          unit: '',
+        },
+        validationSchema: validationSchema,
+        onSubmit: async (values) => {
+            const itemValues = {
+                ...values,
+                quantity: parseInt(values.quantity),
+            };
+
+            const response = await sendNewItemToApi(itemValues);
+
+            if (response.status === 200) {
+                console.log('success')
+                closeHandler(false);
+            } else {
+                console.error('Something went wrong')
+            }
+        },
+      });
+
     return(
         <Modal
             open
         >
             <Paper sx={paperStyle}>
-                <form>
+                <form onSubmit={formik.handleSubmit}>
                 <Typography
                     component="h3"
                     variant="h6"
@@ -52,18 +97,42 @@ const NewItemsModal: FunctionComponent = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'space-between',
-                        height: 200,
+                        height: 240,
                     }}
                 >
-                    <TextField label="Item" variant="outlined"/>
-                    <TextField label="Quantity" variant="outlined" type="number" />
+                    <TextField
+                        label="Item name"
+                        id="name"
+                        name="name"
+                        variant="outlined"
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        error={formik.touched.name && Boolean(formik.errors.name)}
+                        helperText={formik.touched.name && formik.errors.name}
+                    />
+
+                    <TextField
+                        label="Quantity"
+                        id="quantity"
+                        name="quantity"
+                        variant="outlined"
+                        type="number"
+                        value={formik.values.quantity}
+                        onChange={formik.handleChange}
+                        error={formik.touched.quantity && Boolean(formik.errors.quantity)}
+                        helperText={formik.touched.quantity && formik.errors.quantity}
+                        />
 
                     <FormControl fullWidth>
                         <InputLabel id="unit-label">Unit</InputLabel>
                         <Select
                           labelId="unit-label"
                           id="unit"
+                          name="unit"
                          label="Unit"
+                         value={formik.values.unit}
+                         onChange={formik.handleChange}
+                         error={formik.touched.unit && Boolean(formik.errors.unit)}
                         >
                             {unitsOptions}
                         </Select>
@@ -75,11 +144,11 @@ const NewItemsModal: FunctionComponent = () => {
                       direction="row"
                       sx={{ justifyContent: 'center' }}
                     >
-                        <Button variant='contained' color='success'     sx={{mx: 1}}>
+                        <Button variant='contained' color='success' type='submit'    sx={{mx: 1}}>
                             Add
                         </Button>
 
-                        <Button variant="contained" color='error' sx=   {{mx:1}}>
+                        <Button variant="contained" color='error' sx=   {{mx:1}} onClick={() => closeHandler(false)}>
                             Cancel
                        </Button>
                  </Stack>

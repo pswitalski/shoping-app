@@ -9,7 +9,7 @@ interface ItemProps {
     productName: string;
     quantity: number;
     unit: Units;
-    author: User;
+    author?: User;
     isLast?: boolean;
 }
 
@@ -23,7 +23,7 @@ const Item: FunctionComponent<ItemProps> = ({
     return(
         <StyledItemBody isLast={isLast}>
             <StyledSmallContainer>
-                <UserProfile username={author.username} />
+                {author && <UserProfile username={author.username} />}
             </StyledSmallContainer>
 
             <StyledItemDataContainer>

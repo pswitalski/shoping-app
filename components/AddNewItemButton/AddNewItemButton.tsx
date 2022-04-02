@@ -3,7 +3,11 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
 
-const AddNewItemButton: FunctionComponent = () => {
+interface AddNewItemButtonProps {
+    onClick: () => void;
+}
+
+const AddNewItemButton: FunctionComponent<AddNewItemButtonProps> = ({onClick}) => {
     return(
         <Box
             sx={{
@@ -16,6 +20,7 @@ const AddNewItemButton: FunctionComponent = () => {
                 aria-label='add'
                 color='primary'
                 size='large'
+                onClick={onClick}
             >
                 <AddIcon />
             </Fab>
