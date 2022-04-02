@@ -1,5 +1,5 @@
 import { FunctionComponent, Dispatch, SetStateAction } from 'react';
-import { Formik, Field, Form, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {
     Paper,
@@ -17,6 +17,7 @@ import {
 import { Units } from '../../types/units';
 import { Item } from '../../types/item';
 import { sendNewItemToApi } from '../../utils/sendNewItemToApi';
+import { useSession } from "next-auth/react"
 
 const paperStyle = {
     position: 'absolute' as 'absolute',
@@ -52,6 +53,7 @@ const validationSchema = yup.object({
   });
 
 const NewItemsModal: FunctionComponent<NewItemsModalProps> = ({closeHandler}) => {
+    const session = useSession();
 
     const formik = useFormik({
         initialValues: {
@@ -64,7 +66,9 @@ const NewItemsModal: FunctionComponent<NewItemsModalProps> = ({closeHandler}) =>
             const itemValues = {
                 ...values,
                 quantity: parseInt(values.quantity),
+                author: session.data?.user,
             };
+            console.log(itemValues)
 
             const response = await sendNewItemToApi(itemValues);
 
