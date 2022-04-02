@@ -18,7 +18,8 @@ import { Units } from '../../types/units';
 import { Item } from '../../types/item';
 import { User } from '../../types/user';
 import { sendNewItemToApi } from '../../utils/sendNewItemToApi';
-import { useSession } from "next-auth/react"
+import { useSession } from "next-auth/react";
+import { useDispatch } from 'react-redux';
 
 const paperStyle = {
     position: 'absolute' as 'absolute',
@@ -55,6 +56,7 @@ const validationSchema = yup.object({
 
 const NewItemsModal: FunctionComponent<NewItemsModalProps> = ({closeHandler}) => {
     const session = useSession();
+    const dispatch = useDispatch();
 
     const formik = useFormik({
         initialValues: {
@@ -63,23 +65,16 @@ const NewItemsModal: FunctionComponent<NewItemsModalProps> = ({closeHandler}) =>
           unit: '',
         },
         validationSchema: validationSchema,
-        onSubmit: async (values) => {
-            const itemValues = {
-                ...values,
-                quantity: parseInt(values.quantity),
-                author: session.data?.user as User,
-            };
-            console.log(itemValues)
-
-            const response = await sendNewItemToApi(itemValues);
-
-            if (response.status === 200) {
-                console.log('success')
-                closeHandler(false);
-            } else {
-                console.error('Something went wrong')
-            }
-        },
+        onSubmit: (values) => {
+            dispatch({
+                type: 'items/addSingleItem',
+                payload: {
+                    ...values,
+                    quantity: parseInt(values.quantity),
+                    author: session.data?.user as User,
+                }
+            })
+        }
       });
 
     return(
