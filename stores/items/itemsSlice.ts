@@ -14,7 +14,6 @@ export const itemsSlice = createSlice({
             state.itemsList = action.payload.items;
         },
         addSingleItem(state, action) {
-            console.log(state, action)
             state.itemsList = [...state.itemsList, action.payload];
         },
         removeSelectedItem(state, action) {

@@ -4,14 +4,16 @@ import { sendDeleteAllRequestToApi } from '../utils/sendDeleteAllRequestToApi';
 import { sendNewItemToApi } from '../utils/sendNewItemToApi';
 import { fetchItems } from '../utils/fetchItems';
 import { sendDeleteSelectedRequestToApi }  from '../utils/sendDeleteSelectedRequestToApi';
+import { toast } from 'react-toastify';
 
 const fetchItemsUrl = 'http://localhost:3000/api/items';
 
 function* deleteAllItems() {
    try {
       yield call(sendDeleteAllRequestToApi);
+      yield call(() => toast.info('All items have been removed.'))
    } catch (e: any) {
-      yield put({type: "USER_FETCH_FAILED", message: e.message});
+      yield call(() => toast.error('Error. Something went wrong.'));
    }
 }
 
@@ -23,8 +25,9 @@ function* addSingleItem(action: { payload: Item; type: string; }) {
          payload: { ...action.payload, _id: response.id }
       })
      yield put({type: 'modals/closeAddItem'});
+     yield call(() => toast.info('Item added to list'))
   } catch (e: any) {
-     yield put({type: "USER_FETCH_FAILED", message: e.message});
+     yield call(() => toast.error('Error. Something went wrong.'));
   }
 }
 
@@ -34,9 +37,9 @@ function* fetchItemsFromDatabase() {
       const items: Item[] = yield call(() => fetchItems(fetchItemsUrl));
       yield put({ type: 'items/addItems', payload: items })
       yield put({ type: 'loading/stopLoading' });
-      console.log(items)
+      yield call(() => toast.info('Items list has been refreshed.'))
    } catch (e: any) {
-      console.log('blad')
+      yield call(() => toast.error('Error. Something went wrong.'));
    }
 }
 
@@ -44,8 +47,9 @@ function* deleteSelectedItems(action: { payload: string[]; type: string; }) {
    try {
       yield call(() => sendDeleteSelectedRequestToApi(action.payload))
       yield put({ type: 'modals/closeRemoveItem' });
+      yield call(() => toast.info('Selected items have been removed.'))
    } catch (e: any) {
-      console.log(e)
+      yield call(() => toast.error('Error. Something went wrong.'));
    }
 }
 

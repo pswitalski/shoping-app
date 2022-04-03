@@ -24,9 +24,7 @@ const StyledPaper = styled(Paper)`
 `
 
 const StartingContainer: FunctionComponent<StartingContainerProps> = ({children}) => {
-
     const sessionData = useSession()
-    console.log('sessionData: ', sessionData)
 
     return(
         <StyledPaper elevation={8}>

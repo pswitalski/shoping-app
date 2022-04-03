@@ -8,8 +8,6 @@ export async function saveNewItemToDatabase(
     collectionName: string,
     item: Item,
 ) {
-    console.log(item)
-
     if (!username || !password || !databaseName || !collectionName || !item) return;
 
     const client = await MongoClient.connect(`mongodb+srv://${username}:${password}@cluster0.xct7f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`);
