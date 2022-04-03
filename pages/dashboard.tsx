@@ -9,15 +9,15 @@ import RemoveItemsButton from '../components/RemoveItemsButton/RemoveItemsButton
 import NewItemsModal from '../components/NewItemModal/NewItemsModals';
 import CategoryDrawer from '../components/CategoryDrawer/CategoryDrawer';
 import DeleteDialog from '../components/DeleteDialog/DeleteDialog';
-import { sendDeleteAllRequestToApi } from '../utils/sendDeleteAllRequestToApi';
 import { useDispatch, connect } from 'react-redux';
 
 interface DashboardProps {
     isDeleteModalOpen: boolean;
     isNewItemModalOpen: boolean;
+    selectedItems: Array<string>;
 }
 
-const Dashboard: NextPage<DashboardProps> = ({ isDeleteModalOpen, isNewItemModalOpen }) => {
+const Dashboard: NextPage<DashboardProps> = ({ isDeleteModalOpen, isNewItemModalOpen, selectedItems }) => {
     const session = useSession();
     const dispatch = useDispatch();
 
@@ -37,9 +37,16 @@ const Dashboard: NextPage<DashboardProps> = ({ isDeleteModalOpen, isNewItemModal
         dispatch({ type:  'modals/closeRemoveItem'});
     }
 
-    const deleteAllHandler = async () => {
+    const deleteAllHandler = () => {
         dispatch({ type: 'items/clearAll' });
         dispatch({ type:  'modals/closeRemoveItem'});
+    }
+
+    const deleteSelectedHandler = () => {
+        dispatch({
+            type: 'items/removeSelectedItem',
+            payload: selectedItems,
+        })
     }
 
     useEffect(() => {
@@ -60,6 +67,7 @@ const Dashboard: NextPage<DashboardProps> = ({ isDeleteModalOpen, isNewItemModal
             <DeleteDialog
                 closeDialogHandler={closeDeleteModalHandler}
                 deleteAllHandler={deleteAllHandler}
+                deleteSelectedHandler={deleteSelectedHandler}
             />}
         </Box>
     )
@@ -69,6 +77,9 @@ interface stateToPropsType {
     modals: {
         delete: boolean;
         add: boolean;
+    },
+    selectedItems: {
+        selectedItemsIdsList: Array<string>;
     }
 }
 
@@ -77,6 +88,7 @@ function mapStateToProps(state: stateToPropsType) {
     return {
         isDeleteModalOpen: state.modals.delete,
         isNewItemModalOpen: state.modals.add,
+        selectedItems: state.selectedItems.selectedItemsIdsList,
     }
 }
 
