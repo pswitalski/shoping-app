@@ -4,6 +4,7 @@ import { sendDeleteAllRequestToApi } from '../utils/sendDeleteAllRequestToApi';
 import { sendNewItemToApi } from '../utils/sendNewItemToApi';
 import { fetchItems } from '../utils/fetchItems';
 import { sendDeleteSelectedRequestToApi }  from '../utils/sendDeleteSelectedRequestToApi';
+import { toast } from 'react-toastify';
 
 const fetchItemsUrl = 'http://localhost:3000/api/items';
 
@@ -23,8 +24,10 @@ function* addSingleItem(action: { payload: Item; type: string; }) {
          payload: { ...action.payload, _id: response.id }
       })
      yield put({type: 'modals/closeAddItem'});
+     yield call(() => toast.success('Item added to list'))
   } catch (e: any) {
-     yield put({type: "USER_FETCH_FAILED", message: e.message});
+     yield call(() => toast.error('Error. Something went wrong.'));
+
   }
 }
 
