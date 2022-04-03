@@ -22,12 +22,13 @@ const ItemsList: FunctionComponent<ItemsListProps> = ({items, dispatch}) => {
     const generateItems = () => (
         (items.itemsList as ItemType[]).map((item, index) => (
             <Item
-                key={item.name}
+                key={item._id}
                 productName={item.name}
                 quantity={item.quantity}
                 unit={item.unit as Units}
                 isLast={index === items.itemsList.length-1}
                 author={item.author}
+                id={item._id!}
             />
         ))
     )

@@ -11,6 +11,7 @@ interface ItemProps {
     unit: Units;
     author?: User;
     isLast?: boolean;
+    id: string;
 }
 
 const Item: FunctionComponent<ItemProps> = ({
@@ -18,8 +19,10 @@ const Item: FunctionComponent<ItemProps> = ({
     quantity,
     unit,
     author,
-    isLast
+    isLast,
+    id
 }) => {
+    console.log('id: ', id)
     return(
         <StyledItemBody isLast={isLast}>
             <StyledSmallContainer>
