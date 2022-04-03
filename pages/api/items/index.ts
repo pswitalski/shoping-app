@@ -14,9 +14,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-
-    console.log(req.method)
-
     switch(req.method) {
         case 'POST':
           await saveNewItemToDatabase(dbUserName, dbPassword, dbName, itemsCollectionName, req.body)
@@ -24,8 +21,6 @@ export default async function handler(
           break;
 
         case 'DELETE':
-          console.log(req.body);
-
           if (!!req.body.deleteAll) {
             await removeItemsFromDatabase(dbUserName, dbPassword, dbName, itemsCollectionName);
             res.status(200).json({ message: 'All items removed'} );

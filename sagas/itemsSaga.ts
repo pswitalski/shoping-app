@@ -3,6 +3,7 @@ import { Item } from '../types/item';
 import { sendDeleteAllRequestToApi } from '../utils/sendDeleteAllRequestToApi';
 import { sendNewItemToApi } from '../utils/sendNewItemToApi';
 import { fetchItems } from '../utils/fetchItems';
+import { sendDeleteSelectedRequestToApi }  from '../utils/sendDeleteSelectedRequestToApi';
 
 const fetchItemsUrl = 'http://localhost:3000/api/items';
 
@@ -36,10 +37,20 @@ function* fetchItemsFromDatabase() {
    }
 }
 
+function* deleteSelectedItems(action) {
+   try {
+      yield call(() => sendDeleteSelectedRequestToApi(action.payload))
+      yield put({ type: 'modals/closeRemoveItem' });
+   } catch (e: any) {
+      console.log(e)
+   }
+}
+
 function* itemsSaga() {
   yield takeLatest('items/clearAll', deleteAllItems);
   yield takeEvery('items/addSingleItem', addSingleItem);
   yield takeLatest('FETCH_ITEMS', fetchItemsFromDatabase);
+  yield takeEvery('items/removeSelectedItem', deleteSelectedItems);
 }
 
 export default itemsSaga;
