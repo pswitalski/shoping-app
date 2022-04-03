@@ -1,12 +1,11 @@
 import { FunctionComponent, useState, useEffect, Dispatch } from 'react';
 import { connect } from 'react-redux';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { blue } from '@mui/material/colors';
 import Item from "./Item/Item";
 import { Units } from '../../types/units';
 import { Item as ItemType } from '../../types/item';
 import { AppDispatch } from '../../stores/store';
-
-const url = 'http://localhost:3000/api/items';
 
 interface ItemsListProps {
     dispatch: AppDispatch;
@@ -35,9 +34,17 @@ const ItemsList: FunctionComponent<ItemsListProps> = ({items, dispatch}) => {
 
     return(
         <Box>
-            {items.itemsList.length === 0 && <CircularProgress sx={{mx: 'auto', display: 'block'}} />}
+            {items.itemsList.length === 0 &&
+            <Typography
+                component='p'
+                variant='h6'
+                color={`${blue[700]}`}
+                textAlign='center'
+            >
+                List is empty
+            </Typography>
+            }
             {generateItems()}
-
         </Box>
     )
 }
