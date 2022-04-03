@@ -14,18 +14,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-
-    console.log(req.method)
-
     switch(req.method) {
         case 'POST':
-          await saveNewItemToDatabase(dbUserName, dbPassword, dbName, itemsCollectionName, req.body)
-          res.status(200).json(req.body)
+          const newId = await saveNewItemToDatabase(dbUserName, dbPassword, dbName, itemsCollectionName, req.body)
+          console.log(newId)
+          res.status(200).json({id: newId})
           break;
 
         case 'DELETE':
-          console.log(req.body);
-
           if (!!req.body.deleteAll) {
             await removeItemsFromDatabase(dbUserName, dbPassword, dbName, itemsCollectionName);
             res.status(200).json({ message: 'All items removed'} );

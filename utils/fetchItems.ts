@@ -1,5 +1,3 @@
-import { Item } from "../types/item";
-
 const url = 'http://localhost:3000/api/items';
 
 export const fetchItems = async (url: string) => {

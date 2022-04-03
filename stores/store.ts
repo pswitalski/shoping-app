@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import itemsSaga from '../sagas/itemsSaga';
 import modalsReducer from './modals/modalsSlice';
 import loadingReducer from './loading/loadingSlice';
+import selectedItemsReducer from './selectedItems/selectedItemsSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -13,6 +14,7 @@ const store =  configureStore({
       items: itemsReducer,
       modals: modalsReducer,
       loading: loadingReducer,
+      selectedItems: selectedItemsReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
 })
