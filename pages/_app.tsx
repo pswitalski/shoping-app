@@ -12,11 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function MyApp({ Component, pageProps }: AppProps) {
   const { session } = pageProps;
   const router = useRouter();
-  console.log(router.pathname)
-
   const isDashboard = router.pathname === '/dashboard';
-
-console.log(isDashboard)
 
   return(
     <>
