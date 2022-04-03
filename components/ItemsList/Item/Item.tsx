@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
-import { Box, Checkbox, Typography } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { Checkbox, Typography } from '@mui/material';
 import { StyledItemBody, StyledItemDataContainer, StyledSmallContainer } from './atoms/atoms';
 import UserProfile from '../../UserProfile/UserProfile';
 import { Units } from '../../../types/units';
@@ -22,7 +23,26 @@ const Item: FunctionComponent<ItemProps> = ({
     isLast,
     id
 }) => {
-    console.log('id: ', id)
+    const dispatch = useDispatch();
+
+    const checkHandler = (e) => {
+        if (e.target.checked) {
+            dispatch({
+                type: 'selectedItems/selectSingleItem',
+                payload: {
+                    selectedItemId: id
+                }
+             })
+        } else {
+            dispatch({
+                type: 'selectedItems/unselectSingleItem',
+                payload: {
+                    selectedItemId: id
+                }
+             })
+        }
+    }
+
     return(
         <StyledItemBody isLast={isLast}>
             <StyledSmallContainer>
@@ -40,7 +60,7 @@ const Item: FunctionComponent<ItemProps> = ({
             </StyledItemDataContainer>
 
             <StyledSmallContainer>
-                <Checkbox size='medium' />
+                <Checkbox size='medium' onChange={checkHandler} />
             </StyledSmallContainer>
         </StyledItemBody>
     )
