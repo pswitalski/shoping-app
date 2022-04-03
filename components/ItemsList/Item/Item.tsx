@@ -23,7 +23,7 @@ const Item: FunctionComponent<ItemProps> = ({
     return(
         <StyledItemBody isLast={isLast}>
             <StyledSmallContainer>
-                {author && <UserProfile username={author.name} />}
+                {author && <UserProfile username={author.name} src={author.image} />}
             </StyledSmallContainer>
 
             <StyledItemDataContainer>

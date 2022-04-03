@@ -26,8 +26,10 @@ function* addSingleItem(action: { payload: Item; type: string; }) {
 function* fetchItemsFromDatabase() {
    console.log('saga')
    try {
+      yield put({ type: 'loading/startLoading' });
       const items = yield call(() => fetchItems(fetchItemsUrl));
       yield put({ type: 'items/addItems', payload: items })
+      yield put({ type: 'loading/stopLoading' });
       console.log(items)
    } catch (e: any) {
       console.log('blad')

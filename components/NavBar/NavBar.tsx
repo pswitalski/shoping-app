@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { signOut, useSession } from "next-auth/react"
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 import Box from '@mui/material/Box';
 import AppBar from "@mui/material/AppBar";
 import Typography from '@mui/material/Typography';
@@ -8,12 +8,15 @@ import IconButton from '@mui/material/IconButton';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import Button from '@mui/material/Button';
 import UserProfile from '../UserProfile/UserProfile';
+import LinearProgress from '@mui/material/LinearProgress';
+import { blue } from '@mui/material/colors';
 
 interface NavBarProps {
     title: string;
+    isLoading: boolean;
 }
 
-const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
+const NavBar: FunctionComponent<NavBarProps> = ({title, isLoading}) => {
     const dispatch = useDispatch();
     const { status, data } = useSession();
     const isUserAuthenticated = status === 'authenticated';
@@ -72,9 +75,33 @@ const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
                     }
                 </Box>
 
+
             </AppBar>
+            <Box
+                sx={{
+                    background: `${blue[700]}`,
+                    height: 4,
+                    boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)'
+                }}
+            >
+                    <LinearProgress
+                        color='primary'
+                        sx={{
+                            opacity: isLoading ? 1 : 0,
+                            transition: 'opacity 0.5s',
+                        }}
+                    />
+            </Box>
         </Box>
     )
 }
 
-export default NavBar;
+function mapStateToProps(
+    state: { loading: { isLoading: boolean; }; }
+    ) {
+    return {
+        isLoading: state.loading.isLoading
+    }
+}
+
+export default connect(mapStateToProps)(NavBar);
