@@ -8,4 +8,10 @@ export default {
     component: AddNewItemButton,
 } as ComponentMeta<typeof AddNewItemButton>;
 
-export const Primary: ComponentStory<typeof AddNewItemButton> = () => <AddNewItemButton onClick={() => console.log('click')}>Button</AddNewItemButton>;
+export const Standard: ComponentStory<typeof AddNewItemButton> = () => (
+    <AddNewItemButton
+        onClick={() => console.log('click')}
+    >
+        Button
+    </AddNewItemButton>
+);
