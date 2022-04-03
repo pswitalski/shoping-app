@@ -17,7 +17,6 @@ export default async function handler(
     switch(req.method) {
         case 'POST':
           const newId = await saveNewItemToDatabase(dbUserName, dbPassword, dbName, itemsCollectionName, req.body)
-          console.log(newId)
           res.status(200).json({id: newId})
           break;
 

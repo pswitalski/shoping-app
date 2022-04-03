@@ -13,8 +13,6 @@ const ProviderForm: FunctionComponent = () => {
         }
     },[session])
 
-    console.log(session)
-
     return(
         <StyledForm>
             <Typography component="h2" variant="h6" sx={{ mb: 1 }}>

@@ -12,7 +12,7 @@ function* deleteAllItems() {
    try {
       yield call(sendDeleteAllRequestToApi);
    } catch (e: any) {
-      yield put({type: "USER_FETCH_FAILED", message: e.message});
+      yield call(() => toast.error('Error. Something went wrong.'));
    }
 }
 
@@ -27,7 +27,6 @@ function* addSingleItem(action: { payload: Item; type: string; }) {
      yield call(() => toast.success('Item added to list'))
   } catch (e: any) {
      yield call(() => toast.error('Error. Something went wrong.'));
-
   }
 }
 
@@ -37,9 +36,8 @@ function* fetchItemsFromDatabase() {
       const items: Item[] = yield call(() => fetchItems(fetchItemsUrl));
       yield put({ type: 'items/addItems', payload: items })
       yield put({ type: 'loading/stopLoading' });
-      console.log(items)
    } catch (e: any) {
-      console.log('blad')
+      yield call(() => toast.error('Error. Something went wrong.'));
    }
 }
 
@@ -48,7 +46,7 @@ function* deleteSelectedItems(action: { payload: string[]; type: string; }) {
       yield call(() => sendDeleteSelectedRequestToApi(action.payload))
       yield put({ type: 'modals/closeRemoveItem' });
    } catch (e: any) {
-      console.log(e)
+      yield call(() => toast.error('Error. Something went wrong.'));
    }
 }
 
