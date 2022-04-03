@@ -16,8 +16,9 @@ export default async function handler(
 ) {
     switch(req.method) {
         case 'POST':
-          await saveNewItemToDatabase(dbUserName, dbPassword, dbName, itemsCollectionName, req.body)
-          res.status(200).json(req.body)
+          const newId = await saveNewItemToDatabase(dbUserName, dbPassword, dbName, itemsCollectionName, req.body)
+          console.log(newId)
+          res.status(200).json({id: newId})
           break;
 
         case 'DELETE':

@@ -11,5 +11,7 @@ export async function sendNewItemToApi(values: Item) {
         body: JSON.stringify(values)
     })
 
-    return response;
+    const data = await response.json();
+
+    return data;
 }

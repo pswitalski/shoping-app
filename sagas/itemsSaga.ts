@@ -17,7 +17,11 @@ function* deleteAllItems() {
 
 function* addSingleItem(action: { payload: Item; type: string; }) {
   try {
-     yield call(() => sendNewItemToApi(action.payload));
+     const response: { id: string } =  yield call(() => sendNewItemToApi(action.payload));
+      yield put({
+         type: 'items/addSingleItem',
+         payload: { ...action.payload, _id: response.id }
+      })
      yield put({type: 'modals/closeAddItem'});
   } catch (e: any) {
      yield put({type: "USER_FETCH_FAILED", message: e.message});
@@ -25,10 +29,9 @@ function* addSingleItem(action: { payload: Item; type: string; }) {
 }
 
 function* fetchItemsFromDatabase() {
-   console.log('saga')
    try {
       yield put({ type: 'loading/startLoading' });
-      const items = yield call(() => fetchItems(fetchItemsUrl));
+      const items: Item[] = yield call(() => fetchItems(fetchItemsUrl));
       yield put({ type: 'items/addItems', payload: items })
       yield put({ type: 'loading/stopLoading' });
       console.log(items)
@@ -37,7 +40,7 @@ function* fetchItemsFromDatabase() {
    }
 }
 
-function* deleteSelectedItems(action) {
+function* deleteSelectedItems(action: { payload: string[]; type: string; }) {
    try {
       yield call(() => sendDeleteSelectedRequestToApi(action.payload))
       yield put({ type: 'modals/closeRemoveItem' });
@@ -48,7 +51,7 @@ function* deleteSelectedItems(action) {
 
 function* itemsSaga() {
   yield takeLatest('items/clearAll', deleteAllItems);
-  yield takeEvery('items/addSingleItem', addSingleItem);
+  yield takeEvery('ADD_NEW_ITEM', addSingleItem);
   yield takeLatest('FETCH_ITEMS', fetchItemsFromDatabase);
   yield takeEvery('items/removeSelectedItem', deleteSelectedItems);
 }

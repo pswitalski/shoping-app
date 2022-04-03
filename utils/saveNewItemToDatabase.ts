@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import { Item } from "../types/item";
 
 export async function saveNewItemToDatabase(
@@ -17,15 +17,18 @@ export async function saveNewItemToDatabase(
     try {
         const db = client.db(databaseName);
         const itemsCollection = db.collection(collectionName);
+        const newId = new ObjectId;
 
         const newItem = {
             name: item.name,
             quantity: item.quantity,
             unit: item.unit,
             author: item.author,
+            _id: newId,
         }
 
         itemsCollection.insertOne({...newItem})
+        return newId;
 
     } catch(err) {
         console.error((err as Error).message)

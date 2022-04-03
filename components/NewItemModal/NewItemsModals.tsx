@@ -1,4 +1,4 @@
-import { FunctionComponent, Dispatch, SetStateAction } from 'react';
+import { FunctionComponent } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {
@@ -67,7 +67,7 @@ const NewItemsModal: FunctionComponent<NewItemsModalProps> = ({closeHandler}) =>
         validationSchema: validationSchema,
         onSubmit: (values) => {
             dispatch({
-                type: 'items/addSingleItem',
+                type: 'ADD_NEW_ITEM',
                 payload: {
                     ...values,
                     quantity: parseInt(values.quantity),

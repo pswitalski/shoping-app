@@ -44,6 +44,7 @@ const Dashboard: NextPage<DashboardProps> = ({ isDeleteModalOpen, isNewItemModal
 
     const deleteSelectedHandler = () => {
         if (selectedItems.length === 0) {
+            dispatch({ type: 'modals/closeRemoveItem' });
             return;
         }
 
