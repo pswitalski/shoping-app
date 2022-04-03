@@ -17,17 +17,7 @@ interface ItemsListProps {
 
 const ItemsList: FunctionComponent<ItemsListProps> = ({items, dispatch}) => {
     useEffect( () => {
-        const fetchItems = async (url: string) => {
-            const response = await fetch(url);
-            const data = await response.json();
-            console.log(data)
-            dispatch({
-                type: 'items/addItems',
-                payload: data.items
-            })
-        }
-
-        fetchItems(url);
+        dispatch({ type: 'FETCH_ITEMS' })
     }, [])
 
     const generateItems = () => (

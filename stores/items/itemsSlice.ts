@@ -11,7 +11,7 @@ export const itemsSlice = createSlice({
             state.itemsList = [];
         },
         addItems(state, action) {
-            state.itemsList = action.payload
+            state.itemsList = action.payload.items;
         },
         addSingleItem(state, action) {
             console.log(state, action)

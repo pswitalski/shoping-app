@@ -14,11 +14,7 @@ interface NavBarProps {
 
 const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
     const { status, data } = useSession();
-
     const isUserAuthenticated = status === 'authenticated';
-
-    console.log(status)
-    console.log(data)
 
     return(
         <Box sx={{ flexGrow: 1, mb: 1 }} >
