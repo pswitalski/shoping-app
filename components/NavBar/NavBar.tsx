@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 import { signOut, useSession } from "next-auth/react"
+import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import AppBar from "@mui/material/AppBar";
 import Typography from '@mui/material/Typography';
@@ -13,6 +14,7 @@ interface NavBarProps {
 }
 
 const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
+    const dispatch = useDispatch();
     const { status, data } = useSession();
     const isUserAuthenticated = status === 'authenticated';
 
@@ -34,6 +36,7 @@ const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
                     color="inherit"
                     aria-label="menu"
                     sx={{ mr: 1 }}
+                    onClick={() => dispatch({ type: 'FETCH_ITEMS' })}
                 >
                     <RefreshIcon />
                 </IconButton>}
