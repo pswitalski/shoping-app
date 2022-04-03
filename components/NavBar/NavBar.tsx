@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import AppBar from "@mui/material/AppBar";
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import Button from '@mui/material/Button';
 import UserProfile from '../UserProfile/UserProfile';
 
@@ -15,7 +15,7 @@ interface NavBarProps {
 const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
     const { status, data } = useSession();
 
-    const isLogOutButtonVisible = status === 'authenticated';
+    const isUserAuthenticated = status === 'authenticated';
 
     console.log(status)
     console.log(data)
@@ -25,16 +25,22 @@ const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
             <AppBar
                 position="static"
                 color="primary"
-                sx={{ flexDirection: 'row', alignItems: 'center' }}
+                sx={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    height: 50,
+                    pl: !isUserAuthenticated ? '56px' : 'auto'
+                }}
             >
+                {isUserAuthenticated &&
                 <IconButton
                     size="large"
                     color="inherit"
                     aria-label="menu"
                     sx={{ mr: 1 }}
                 >
-                    <MenuIcon />
-                </IconButton>
+                    <RefreshIcon />
+                </IconButton>}
 
                 <Typography variant='h6' component='p'>
                     {title}
@@ -47,7 +53,7 @@ const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
                         alignItems: 'center',
                     }}
                 >
-                    {isLogOutButtonVisible &&
+                    {isUserAuthenticated &&
                     <UserProfile
                         username={data?.user?.name || 'user'}
                         src={data?.user?.image || undefined}
@@ -56,7 +62,7 @@ const NavBar: FunctionComponent<NavBarProps> = ({title}) => {
                         />
                     }
 
-                    {isLogOutButtonVisible &&
+                    {isUserAuthenticated &&
                     <Button
                         color="inherit"
                         sx={{ mx: 1 }}
