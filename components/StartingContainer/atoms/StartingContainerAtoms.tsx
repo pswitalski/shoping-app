@@ -7,6 +7,7 @@ export const StyledForm = styled.form`
     align-items: center;
     margin-top: 20px;
     width: 100%;
+    min-height: 80px;
 `;
 
 export const StyledTextField = styled(TextField)`
